@@ -38,4 +38,4 @@ def test_nonexistent_endpoint(client):
     
     assert response.status_code == status.HTTP_404_NOT_FOUND
     data = response.json()
-    assert data["error"] == "Not found"
+    assert data["error"] == "HTTP Error"

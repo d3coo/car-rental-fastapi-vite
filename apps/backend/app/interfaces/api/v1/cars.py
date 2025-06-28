@@ -1,8 +1,10 @@
 """
 Cars API endpoints
 """
-from fastapi import APIRouter
+
 from typing import List
+
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/cars", tags=["cars"])
@@ -10,6 +12,7 @@ router = APIRouter(prefix="/cars", tags=["cars"])
 
 class CarResponse(BaseModel):
     """Car response model"""
+
     id: str
     make: str
     model: str

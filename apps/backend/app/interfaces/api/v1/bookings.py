@@ -1,8 +1,10 @@
 """
 Bookings API endpoints
 """
-from fastapi import APIRouter, HTTPException, status
+
 from typing import List
+
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
@@ -10,6 +12,7 @@ router = APIRouter(prefix="/bookings", tags=["bookings"])
 
 class BookingResponse(BaseModel):
     """Booking response model"""
+
     id: str
     user_id: str
     car_id: str
@@ -30,6 +33,5 @@ async def get_booking(booking_id: str):
     """Get booking by ID"""
     # TODO: Implement with actual repository
     raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Booking not found"
+        status_code=status.HTTP_404_NOT_FOUND, detail="Booking not found"
     )

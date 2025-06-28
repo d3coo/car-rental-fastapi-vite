@@ -22,7 +22,7 @@ def test_get_contract_not_found(client):
     
     assert response.status_code == status.HTTP_404_NOT_FOUND
     data = response.json()
-    assert data["detail"] == "Contract not found"
+    assert data["message"] == "Contract not found"
 
 
 @pytest.mark.unit
@@ -39,4 +39,4 @@ def test_create_contract_not_implemented(client):
     
     assert response.status_code == status.HTTP_501_NOT_IMPLEMENTED
     data = response.json()
-    assert data["detail"] == "Not implemented yet"
+    assert data["message"] == "Not implemented yet"

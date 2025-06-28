@@ -1,8 +1,10 @@
 """
 Contracts API endpoints
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+
 from typing import List, Optional
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/contracts", tags=["contracts"])
@@ -10,6 +12,7 @@ router = APIRouter(prefix="/contracts", tags=["contracts"])
 
 class ContractResponse(BaseModel):
     """Contract response model"""
+
     id: str
     user_id: str
     car_id: str
@@ -21,6 +24,7 @@ class ContractResponse(BaseModel):
 
 class ContractCreate(BaseModel):
     """Contract creation model"""
+
     user_id: str
     car_id: str
     start_date: str
@@ -39,8 +43,7 @@ async def get_contract(contract_id: str):
     """Get contract by ID"""
     # TODO: Implement with actual repository
     raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Contract not found"
+        status_code=status.HTTP_404_NOT_FOUND, detail="Contract not found"
     )
 
 
@@ -49,8 +52,7 @@ async def create_contract(contract: ContractCreate):
     """Create new contract"""
     # TODO: Implement with actual use case
     raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Not implemented yet"
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Not implemented yet"
     )
 
 
@@ -59,8 +61,7 @@ async def update_contract(contract_id: str, contract: ContractCreate):
     """Update contract"""
     # TODO: Implement with actual use case
     raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Not implemented yet"
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Not implemented yet"
     )
 
 
@@ -69,6 +70,5 @@ async def delete_contract(contract_id: str):
     """Delete contract"""
     # TODO: Implement with actual use case
     raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Not implemented yet"
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Not implemented yet"
     )

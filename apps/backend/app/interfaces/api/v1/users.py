@@ -1,8 +1,10 @@
 """
 Users API endpoints
 """
-from fastapi import APIRouter
+
 from typing import List
+
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -10,6 +12,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 class UserResponse(BaseModel):
     """User response model"""
+
     id: str
     email: str
     name: str
