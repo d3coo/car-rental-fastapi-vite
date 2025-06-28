@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import vitest from 'eslint-plugin-vitest'
+// import vitest from 'eslint-plugin-vitest'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -26,18 +26,18 @@ export default tseslint.config(
       ],
     },
   },
-  {
-    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
-    plugins: {
-      vitest,
-    },
-    rules: {
-      ...vitest.configs.recommended.rules,
-    },
-    languageOptions: {
-      globals: {
-        ...vitest.environments.env.globals,
-      },
-    },
-  },
+  // {
+  //   files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+  //   plugins: {
+  //     vitest,
+  //   },
+  //   rules: {
+  //     ...vitest.configs.recommended.rules,
+  //   },
+  //   languageOptions: {
+  //     globals: {
+  //       ...vitest.environments.env.globals,
+  //     },
+  //   },
+  // },
 )

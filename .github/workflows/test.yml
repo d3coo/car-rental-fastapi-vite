@@ -39,7 +39,7 @@ jobs:
           pip install -r requirements-ci.txt
 
       - name: Test frontend
-        run: pnpm --filter frontend test --run
+        run: pnpm --filter frontend vitest --run
 
       - name: Lint frontend
         run: pnpm --filter frontend lint
