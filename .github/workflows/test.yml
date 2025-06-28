@@ -29,7 +29,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Install backend dependencies
         working-directory: ./apps/backend
@@ -38,11 +38,17 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Test frontend
+        run: pnpm --filter frontend test --run
+
       - name: Lint frontend
         run: pnpm --filter frontend lint
 
-      - name: Test frontend
-        run: pnpm --filter frontend test
+      - name: Test backend
+        working-directory: ./apps/backend
+        run: |
+          source venv/bin/activate
+          PYTHONPATH=. pytest tests/ -v
 
       - name: Lint backend
         working-directory: ./apps/backend
@@ -51,9 +57,3 @@ jobs:
           black --check app/
           isort --check app/
           flake8 app/
-
-      - name: Test backend
-        working-directory: ./apps/backend
-        run: |
-          source venv/bin/activate
-          pytest tests/ -v

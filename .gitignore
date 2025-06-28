@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-pnpm-lock.yaml
+# pnpm-lock.yaml - Keep this for reproducible builds
 
 # Python
 __pycache__/
