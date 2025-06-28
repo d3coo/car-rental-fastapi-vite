@@ -2,10 +2,9 @@
 Contracts API endpoints
 """
 
-from typing import List, Optional
-from datetime import datetime
+from typing import Optional
 
-from fastapi import APIRouter, HTTPException, status, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel
 
 from app.domain.repositories.contract_repository import ContractRepository
@@ -57,7 +56,7 @@ async def get_contracts(
     payment_status: Optional[str] = Query(None),
     user_id: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
-    repository: ContractRepository = Depends(get_contract_repository)
+    repository: ContractRepository = Depends(get_contract_repository),
 ):
     """Get all contracts with pagination and filters"""
     try:
@@ -67,45 +66,43 @@ async def get_contracts(
             status=status,
             payment_status=payment_status,
             user_id=user_id,
-            search=search
+            search=search,
         )
         return {
             "data": result,
             "message": "Contracts retrieved successfully",
-            "status_code": 200
+            "status_code": 200,
         }
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to retrieve contracts: {str(e)}"
+            detail=f"Failed to retrieve contracts: {str(e)}",
         )
 
 
 @router.get("/{contract_id}")
 async def get_contract(
-    contract_id: str,
-    repository: ContractRepository = Depends(get_contract_repository)
+    contract_id: str, repository: ContractRepository = Depends(get_contract_repository)
 ):
     """Get contract by ID"""
     try:
         contract = await repository.find_by_id(contract_id)
         if not contract:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, 
-                detail="Contract not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="Contract not found"
             )
-        
+
         return {
             "data": contract.to_dict(),
             "message": "Contract retrieved successfully",
-            "status_code": 200
+            "status_code": 200,
         }
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to retrieve contract: {str(e)}"
+            detail=f"Failed to retrieve contract: {str(e)}",
         )
 
 
