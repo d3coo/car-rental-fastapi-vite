@@ -1,0 +1,29 @@
+{
+  "name": "car-rental-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Car Rental Management System - FastAPI + Vite Monorepo",
+  "scripts": {
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"yellow,cyan\" \"pnpm --filter backend dev\" \"pnpm --filter frontend dev\"",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "build:backend": "cd apps/backend && source venv/bin/activate && python -c 'print(\"Backend build complete\")'",
+    "test": "pnpm test:frontend && pnpm test:backend",
+    "test:backend": "cd apps/backend && source venv/bin/activate && pytest tests/ -v",
+    "test:frontend": "pnpm --filter frontend test",
+    "lint": "pnpm lint:frontend && pnpm lint:backend",
+    "lint:frontend": "pnpm --filter frontend lint",
+    "lint:backend": "cd apps/backend && source venv/bin/activate && black --check app/ && isort --check app/ && flake8 app/",
+    "format": "pnpm format:frontend && pnpm format:backend",
+    "format:frontend": "pnpm --filter frontend lint:fix",
+    "format:backend": "cd apps/backend && source venv/bin/activate && black app/ && isort app/",
+    "install:backend": "cd apps/backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "packageManager": "pnpm@10.12.1"
+}
