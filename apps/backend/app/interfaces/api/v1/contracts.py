@@ -2,9 +2,9 @@
 Contracts API endpoints
 """
 
-from typing import List, Optional
+from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/contracts", tags=["contracts"])
