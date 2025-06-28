@@ -22,7 +22,6 @@ class MockContractRepository(ContractRepository):
         """Populate with sample contract data"""
         # Create a sample contract
         sample_contract = Contract(
-            id="contract_1",
             order_id="ORDER_001",
             contract_number="CNT_001",
             user_id="user_123",
@@ -46,6 +45,8 @@ class MockContractRepository(ContractRepository):
                 "dropoff_location": "Riyadh Airport"
             }
         )
+        # Set the ID manually after creation
+        sample_contract.id = "contract_1"
         self._contracts[sample_contract.id] = sample_contract
     
     async def find_by_id(self, contract_id: str) -> Optional[Contract]:

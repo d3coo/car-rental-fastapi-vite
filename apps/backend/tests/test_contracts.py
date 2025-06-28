@@ -7,12 +7,16 @@ from fastapi import status
 
 @pytest.mark.unit
 def test_get_contracts_empty(client):
-    """Test getting contracts returns empty list initially"""
+    """Test getting contracts returns proper response format"""
     response = client.get("/api/v1/contracts/")
     
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-    assert data == []
+    assert "data" in data
+    assert "message" in data
+    assert "status_code" in data
+    assert data["status_code"] == 200
+    assert isinstance(data["data"]["contracts"], list)
 
 
 @pytest.mark.unit
@@ -22,6 +26,7 @@ def test_get_contract_not_found(client):
     
     assert response.status_code == status.HTTP_404_NOT_FOUND
     data = response.json()
+    assert "message" in data
     assert data["message"] == "Contract not found"
 
 
