@@ -113,6 +113,8 @@ temp/
 # Firebase
 firebase-debug.log
 .firebase/
+firebase-service.json
+**/firebase-service.json
 
 # pytest
 .pytest_cache/

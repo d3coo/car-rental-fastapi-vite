@@ -233,6 +233,29 @@ VITE_LOGIN_PASSWORD=password
 NODE_ENV=development
 ```
 
+## MCP (Model Context Protocol) Configuration
+
+This project includes MCP configuration for enhanced Claude Code capabilities:
+
+### Configured MCP Servers
+- **Firebase MCP Server**: Direct Firebase project management, Firestore operations, Authentication, and 40+ Firebase tools
+- **Filesystem MCP Server**: Project file read/write operations with scope limited to project directory
+- **Git MCP Server**: Version control operations for repository management
+
+### Setup Requirements
+```bash
+# Authenticate Firebase CLI (required for Firebase MCP server)
+npx -y firebase-tools@latest login --reauth
+```
+
+### Configuration File
+MCP servers are configured in `.mcp.json` (checked into version control for team collaboration).
+
+### Usage
+- MCP servers automatically load when using Claude Code in this project
+- Use `/mcp` command to check server status
+- See `MCP_SETUP.md` for detailed setup and troubleshooting guide
+
 ## Database Design
 
 ### Firebase Firestore Collections
