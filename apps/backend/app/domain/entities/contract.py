@@ -226,6 +226,11 @@ class Contract(Entity):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+        # Clean booking_details to remove non-serializable objects
+        clean_booking_details = {}
+        if self.booking_details:
+            clean_booking_details = self._clean_for_serialization(self.booking_details)
+
         return {
             "id": self.id,
             "OrderId": self.order_id,
@@ -248,7 +253,7 @@ class Contract(Entity):
             "IsExtended": self.is_extended,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
-            "BookingDetails": self.booking_details,
+            "BookingDetails": clean_booking_details,
             "transaction_info": (
                 {
                     "status": self.transaction_info.status.value,
@@ -274,3 +279,32 @@ class Contract(Entity):
                 else []
             ),
         }
+
+    def _clean_for_serialization(self, obj: Any) -> Any:
+        """Recursively clean object for JSON serialization"""
+        if isinstance(obj, dict):
+            if obj.get("__type__") == "Reference":
+                # Convert Firebase Reference to just the ID
+                ref_path = obj.get("value", "")
+                if "/" in ref_path:
+                    return ref_path.split("/")[-1]
+                return ref_path
+            elif obj.get("__type__") == "Timestamp":
+                # Convert Firebase Timestamp to ISO string
+                timestamp_str = obj.get("value", "")
+                return timestamp_str
+            elif obj.get("__type__") == "GeoPoint":
+                # Convert Firebase GeoPoint to lat/lng dict
+                return {
+                    "lat": obj.get("value", [0, 0])[0],
+                    "lng": obj.get("value", [0, 0])[1],
+                }
+            else:
+                # Recursively clean nested dictionaries
+                return {k: self._clean_for_serialization(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            # Recursively clean lists
+            return [self._clean_for_serialization(item) for item in obj]
+        else:
+            # Return primitive types as-is
+            return obj

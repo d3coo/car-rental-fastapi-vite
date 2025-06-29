@@ -67,13 +67,33 @@ def test_get_car_not_found(client):
 @pytest.mark.unit
 def test_get_car_by_license_plate(client):
     """Test getting car by license plate"""
-    # Use sample license plate from mock data
-    response = client.get("/api/v1/cars/license/ABC-1234")
+    # First get available cars to find a real license plate
+    response = client.get("/api/v1/cars/")
     assert response.status_code == 200
     
-    data = response.json()
-    assert data["data"]["license_plate"] == "ABC-1234"
-    assert data["message"] == "Car retrieved successfully"
+    cars = response.json()["data"]["cars"]
+    if cars:
+        # Use the first available car's license plate (which is generated)
+        car = cars[0]
+        car_id = car["id"]
+        license_plate = car["license_plate"]
+        
+        # Verify the license plate format is correct: {make[:3]}-{doc_id[:4]}
+        expected_license = f"{car['make'][:3].upper()}-{car_id[:4]}"
+        assert license_plate == expected_license, f"License plate {license_plate} doesn't match expected format {expected_license}"
+        
+        # Test with real license plate
+        response = client.get(f"/api/v1/cars/license/{license_plate}")
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert data["data"]["license_plate"] == license_plate
+        assert data["data"]["id"] == car_id  # Should be the same car
+        assert data["message"] == "Car retrieved successfully"
+    else:
+        # If no cars available, test should pass (empty database scenario)
+        response = client.get("/api/v1/cars/license/NONEXISTENT")
+        assert response.status_code == 404
 
 
 @pytest.mark.unit

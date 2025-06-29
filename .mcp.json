@@ -9,27 +9,6 @@
       ],
       "env": {},
       "description": "Firebase tools for managing projects, Firestore, Authentication, and other Firebase services"
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/deco/Documents/GitHub/Contract-Editor/new-structure"
-      ],
-      "env": {},
-      "description": "Filesystem access for reading and writing project files"
-    },
-    "git": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-git",
-        "--repository",
-        "/Users/deco/Documents/GitHub/Contract-Editor/new-structure"
-      ],
-      "env": {},
-      "description": "Git operations for version control management"
     }
   }
 }

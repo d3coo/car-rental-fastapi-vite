@@ -118,9 +118,7 @@ class User(Entity):
     def activate(self) -> None:
         """Activate user account"""
         if not self.email_verified or not self.phone_verified:
-            raise BusinessRuleViolation(
-                "User must be verified before activation"
-            )
+            raise BusinessRuleViolation("User must be verified before activation")
 
         if self.status == UserStatus.SUSPENDED:
             raise BusinessRuleViolation("Cannot activate suspended user")

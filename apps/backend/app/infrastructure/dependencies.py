@@ -5,9 +5,9 @@ Dependency injection container for the application
 from functools import lru_cache
 from typing import Optional
 
+from app.domain.repositories.car_repository import CarRepository
 from app.domain.repositories.contract_repository import ContractRepository
 from app.domain.repositories.user_repository import UserRepository
-from app.domain.repositories.car_repository import CarRepository
 
 
 class DependencyContainer:

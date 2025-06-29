@@ -3,7 +3,6 @@ Car repository interface
 """
 
 from abc import ABC, abstractmethod
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from ..entities.car import Car
@@ -70,8 +69,6 @@ class CarRepository(ABC):
         pass
 
     @abstractmethod
-    async def find_cars_by_make_and_model(
-        self, make: str, model: str
-    ) -> List[Car]:
+    async def find_cars_by_make_and_model(self, make: str, model: str) -> List[Car]:
         """Find cars by make and model"""
         pass

@@ -86,6 +86,12 @@ class Car(Entity):
 
     def validate(self):
         """Validate car business rules"""
+        self._validate_basic_info()
+        self._validate_rates()
+        self._validate_technical_specs()
+
+    def _validate_basic_info(self):
+        """Validate basic car information"""
         if not self.make or not self.make.strip():
             raise ValidationError("Car make is required")
 
@@ -93,7 +99,9 @@ class Car(Entity):
             raise ValidationError("Car model is required")
 
         if self.year < 1900 or self.year > datetime.now().year + 2:
-            raise ValidationError(f"Car year must be between 1900 and {datetime.now().year + 2}")
+            raise ValidationError(
+                f"Car year must be between 1900 and {datetime.now().year + 2}"
+            )
 
         if not self.color or not self.color.strip():
             raise ValidationError("Car color is required")
@@ -104,6 +112,8 @@ class Car(Entity):
         if not self.category or not self.category.strip():
             raise ValidationError("Car category is required")
 
+    def _validate_rates(self):
+        """Validate pricing rates"""
         if self.daily_rate.amount <= 0:
             raise ValidationError("Daily rate must be positive")
 
@@ -113,6 +123,8 @@ class Car(Entity):
         if self.monthly_rate and self.monthly_rate.amount <= 0:
             raise ValidationError("Monthly rate must be positive")
 
+    def _validate_technical_specs(self):
+        """Validate technical specifications"""
         if self.mileage is not None and self.mileage < 0:
             raise ValidationError("Mileage cannot be negative")
 
@@ -309,8 +321,12 @@ class Car(Entity):
             "has_bluetooth": self.has_bluetooth,
             "has_usb_charger": self.has_usb_charger,
             "has_backup_camera": self.has_backup_camera,
-            "last_service_date": self.last_service_date.isoformat() if self.last_service_date else None,
-            "next_service_date": self.next_service_date.isoformat() if self.next_service_date else None,
+            "last_service_date": (
+                self.last_service_date.isoformat() if self.last_service_date else None
+            ),
+            "next_service_date": (
+                self.next_service_date.isoformat() if self.next_service_date else None
+            ),
             "service_interval_km": self.service_interval_km,
             "is_overdue_for_service": self.is_overdue_for_service(),
             "car_data": self.car_data,

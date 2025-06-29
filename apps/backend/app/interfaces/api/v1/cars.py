@@ -135,9 +135,7 @@ async def get_cars_due_for_service(
 
 
 @router.get("/{car_id}")
-async def get_car(
-    car_id: str, repository: CarRepository = Depends(get_car_repository)
-):
+async def get_car(car_id: str, repository: CarRepository = Depends(get_car_repository)):
     """Get car by ID"""
     try:
         car = await repository.find_by_id(car_id)

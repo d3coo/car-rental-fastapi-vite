@@ -68,12 +68,18 @@ async def get_contracts(
             user_id=user_id,
             search=search,
         )
+        # result already contains dictionaries from _paginate_results
         return {
             "data": result,
             "message": "Contracts retrieved successfully",
             "status_code": 200,
         }
     except Exception as e:
+        import traceback
+
+        print(f"❌ Contract endpoint error: {e}")
+        print(f"❌ Error type: {type(e).__name__}")
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to retrieve contracts: {str(e)}",

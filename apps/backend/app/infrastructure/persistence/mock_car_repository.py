@@ -61,7 +61,13 @@ class MockCarRepository(CarRepository):
                 "transmission": TransmissionType.AUTOMATIC,
                 "seats": 7,
                 "engine_size": "3.0L",
-                "features": ["Air Conditioning", "Power Steering", "ABS", "Sunroof", "Leather Seats"],
+                "features": [
+                    "Air Conditioning",
+                    "Power Steering",
+                    "ABS",
+                    "Sunroof",
+                    "Leather Seats",
+                ],
                 "has_gps": True,
                 "has_bluetooth": True,
                 "has_usb_charger": True,
@@ -160,7 +166,9 @@ class MockCarRepository(CarRepository):
             cars = [c for c in cars if c.make.lower() == make.lower()]
 
         if location and location != "all":
-            cars = [c for c in cars if c.location and c.location.lower() == location.lower()]
+            cars = [
+                c for c in cars if c.location and c.location.lower() == location.lower()
+            ]
 
         if search:
             search_lower = search.lower()
@@ -225,7 +233,9 @@ class MockCarRepository(CarRepository):
             cars = [c for c in cars if c.category.lower() == category.lower()]
 
         if location:
-            cars = [c for c in cars if c.location and c.location.lower() == location.lower()]
+            cars = [
+                c for c in cars if c.location and c.location.lower() == location.lower()
+            ]
 
         return cars
 
@@ -235,14 +245,14 @@ class MockCarRepository(CarRepository):
         return [
             c
             for c in self._cars.values()
-            if (c.next_service_date 
+            if (
+                c.next_service_date
                 and c.next_service_date <= future_date
-                and c.status != CarStatus.OUT_OF_SERVICE)
+                and c.status != CarStatus.OUT_OF_SERVICE
+            )
         ]
 
-    async def find_cars_by_make_and_model(
-        self, make: str, model: str
-    ) -> List[Car]:
+    async def find_cars_by_make_and_model(self, make: str, model: str) -> List[Car]:
         """Find cars by make and model"""
         return [
             c

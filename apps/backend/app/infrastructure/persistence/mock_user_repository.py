@@ -64,7 +64,7 @@ class MockUserRepository(UserRepository):
             user = User(**user_data)
             # Set ID manually after creation to avoid constructor issues
             user.id = f"user_{len(self._users) + 1}"
-            
+
             # Add sample saved address for first user
             if user.email == "john.doe@example.com":
                 address = SavedAddress(
@@ -75,7 +75,7 @@ class MockUserRepository(UserRepository):
                     coordinates={"lat": 24.7136, "lng": 46.6753},
                 )
                 user.saved_addresses.append(address)
-            
+
             self._users[user.id] = user
 
     async def find_by_id(self, user_id: str) -> Optional[User]:
@@ -184,9 +184,7 @@ class MockUserRepository(UserRepository):
 
     async def find_by_wallet_balance_above(self, amount: float) -> List[User]:
         """Find users with wallet balance above specified amount"""
-        return [
-            u for u in self._users.values() if u.wallet_balance.to_float() > amount
-        ]
+        return [u for u in self._users.values() if u.wallet_balance.to_float() > amount]
 
     async def find_unverified_users(self, days_old: int = 7) -> List[User]:
         """Find users who haven't verified within specified days"""
@@ -194,5 +192,6 @@ class MockUserRepository(UserRepository):
         return [
             u
             for u in self._users.values()
-            if u.status == UserStatus.PENDING_VERIFICATION and u.created_at <= cutoff_date
+            if u.status == UserStatus.PENDING_VERIFICATION
+            and u.created_at <= cutoff_date
         ]
