@@ -70,18 +70,24 @@ export default function ContractsPage() {
                   {contracts.map((contract) => (
                     <tr key={contract.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {contract.id}
+                        {contract.ContractNumber || contract.id}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {contract.user_id}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                          {contract.status}
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          contract.ContractStatus === 'active' 
+                            ? 'bg-green-100 text-green-800'
+                            : contract.ContractStatus === 'completed'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {contract.ContractStatus}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${contract.total_amount}
+                        {contract.total_cost} {contract.Currency}
                       </td>
                     </tr>
                   ))}
